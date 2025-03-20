@@ -1,215 +1,45 @@
-// import { Button } from "@/components/ui/button";
-// import { Calendar } from "@/components/ui/calendar";
-// import {
-//   FormField,
-//   FormItem,
-//   FormLabel,
-//   FormMessage,
-//   FormControl,
-//   FormDescription,
-//   Form,
-// } from "@/components/ui/form";
-// import { Input } from "@/components/ui/input";
-// import {
-//   Popover,
-//   PopoverContent,
-//   PopoverTrigger,
-// } from "@/components/ui/popover";
-// import { toast } from "@/hooks/use-toast";
-// import { cn } from "@/lib/utils";
-// import { zodResolver } from "@hookform/resolvers/zod";
-
-// import { CalendarIcon } from "lucide-react";
-// import { useForm } from "react-hook-form";
-// import { z } from "zod";
-
-// export const FormSchema = z.object({
-//   title: z.string().min(1),
-// //   start: z.date({
-// //     required_error: "Fecha de inicio requerida",
-// //   }),
-// //   end: z.date({
-// //     required_error: "Fecha de finalización requerida",
-// //   }),
-// });
-// export default function EventForm() {
-//   const form = useForm<z.infer<typeof FormSchema>>({
-//     resolver: zodResolver(FormSchema),
-//   });
-
-//   function onSubmit(data: z.infer<typeof FormSchema>) {
-//     toast({
-//       title: "You submitted the following values:",
-//       description: (
-//         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-//           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-//         </pre>
-//       ),
-//     });
-//   }
-//   const format = (date: Date, format: string) => {
-//     const day = date.getDate();
-//     const month = date.getMonth() + 1;
-//     const year = date.getFullYear();
-//     return format
-//       .replace("DD", day.toString().padStart(2, "0"))
-//       .replace("MM", month.toString().padStart(2, "0"))
-//       .replace("YYYY", year.toString());
-//   };
-//   return (
-//     <Form {...form}>
-//       <form
-//         onSubmit={form.handleSubmit(onSubmit)}
-//         className="flex flex-col gap-4"
-//       >
-//         <FormField
-//           control={form.control}
-//           name="title"
-//           render={({ field }) => (
-//             <FormItem>
-//               <FormLabel>Título</FormLabel>
-//               <Input
-//                 placeholder="Escribe el título del evento"
-//                 {...field}
-//                 className="w-[240px] pl-3 text-left font-normal"
-//               />
-//               <FormMessage />
-//             </FormItem>
-//           )}
-//         />
-//         {/* <FormField
-//           control={form.control}
-//           name="start"
-//           render={({ field }) => (
-//             <FormItem className="flex flex-col">
-//               <FormLabel> Inicio</FormLabel>
-//               <Popover>
-//                 <PopoverTrigger asChild>
-//                   <FormControl>
-//                     <Button
-//                       variant={"outline"}
-//                       className={cn(
-//                         "w-[240px] pl-3 text-left font-normal",
-//                         !field.value && "text-muted-foreground"
-//                       )}
-//                     >
-//                       {field.value ? (
-//                         format(field.value, "PPP")
-//                       ) : (
-//                         <span>Seleccionar fecha</span>
-//                       )}
-//                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-//                     </Button>
-//                   </FormControl>
-//                 </PopoverTrigger>
-//                 <PopoverContent className="w-auto p-0" align="start">
-//                   <Calendar
-//                     mode="single"
-//                     selected={field.value}
-//                     onSelect={field.onChange}
-//                     disabled={(date) =>
-//                       date > new Date() || date < new Date("1900-01-01")
-//                     }
-//                     initialFocus
-//                   />
-//                 </PopoverContent>
-//               </Popover>
-//               <FormDescription>
-//                 Selecciona la fecha de inicio del evento
-//               </FormDescription>
-//               <FormMessage />
-//             </FormItem>
-//           )}
-//         />
-//         <FormField
-//           control={form.control}
-//           name="end"
-//           render={({ field }) => (
-//             <FormItem className="flex flex-col">
-//               <FormLabel>Fecha Final del evento</FormLabel>
-//               <Popover>
-//                 <PopoverTrigger asChild>
-//                   <FormControl>
-//                     <Button
-//                       variant={"outline"}
-//                       className={cn(
-//                         "w-[240px] pl-3 text-left font-normal",
-//                         !field.value && "text-muted-foreground"
-//                       )}
-//                     >
-//                       {field.value ? (
-//                         format(field.value, "PPP")
-//                       ) : (
-//                         <span>Seleccionar fecha</span>
-//                       )}
-//                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-//                     </Button>
-//                   </FormControl>
-//                 </PopoverTrigger>
-//                 <PopoverContent className="w-auto p-0" align="start">
-//                   <Calendar
-//                     mode="single"
-//                     selected={field.value}
-//                     onSelect={field.onChange}
-//                     disabled={(date) =>
-//                       date > new Date() || date < new Date("1900-01-01")
-//                     }
-//                     initialFocus
-//                   />
-//                 </PopoverContent>
-//               </Popover>
-//               <FormDescription>
-//                 Selecciona la fecha de finalización del evento
-//               </FormDescription>
-//               <FormMessage />
-//             </FormItem>
-//           )}
-//         /> */}
-//         <Button type="submit">Submit</Button>
-//       </form>
-//     </Form>
-//   );
-// }
-
-"use client"
-
-import { zodResolver } from "@hookform/resolvers/zod"
-import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+"use client";
+import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-import { toast } from "@/hooks/use-toast"
+  Form,
+  FormControl,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
-const FormSchema = z.object({
-  dob: z.date({
-    required_error: "A date of birth is required.",
+import { toast } from "@/hooks/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { DatePicker } from "./DayPickerEvent";
+import { useStoreCalendar } from "../domain/useStoreCalendar";
+
+export const FormSchema = z.object({
+  title: z
+    .string({
+      required_error: "Título requerido",
+    })
+    .min(1),
+  fecha: z.date({
+    required_error: "Fecha de inicio requerida",
   }),
-})
-
+});
 export default function EventForm() {
+  // const { setHasEvent, hasEvent } = useCalendar();
+  const setHasEvent = useStoreCalendar((state) => state.setHasEvent);
+    const setIsLoading = useStoreCalendar((state) => state.setIsLoading);
+  
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-  })
+  });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
+    setIsLoading(true);
+    setHasEvent(false);
     toast({
       title: "You submitted the following values:",
       description: (
@@ -217,59 +47,53 @@ export default function EventForm() {
           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
         </pre>
       ),
-    })
+    });
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+      
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-4"
+      >
         <FormField
           control={form.control}
-          name="dob"
+          name="title"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Date of birth</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
-                    disabled={(date) =>
-                      date > new Date() || date < new Date("1900-01-01")
-                    }
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-              <FormDescription>
-                Your date of birth is used to calculate your age.
-              </FormDescription>
+            <FormItem>
+              <FormLabel>Título</FormLabel>
+              <Input
+                onChange={field.onChange}
+                value={field.value}
+                placeholder="Escribe el título del evento"
+                className=" pl-3 text-left font-normal"
+              />
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <FormField
+          control={form.control}
+          name="fecha"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <DatePicker
+                  label="Fecha del evento"
+                  date={field.value}
+                  setDate={field.onChange}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Crear</Button>
       </form>
     </Form>
-  )
+  );
 }
-

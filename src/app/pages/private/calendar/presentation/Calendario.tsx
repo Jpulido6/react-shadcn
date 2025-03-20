@@ -1,11 +1,17 @@
 import { Calendar } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { DialogComponent } from "@/components/dialog/Dialog";
 import { useCalendar } from "../view-model/useCalendar";
 import "./calendar.css";
+import { Button } from "@/components/ui/button";
 import EventForm from "../components/EventForm";
-
+import { useStoreCalendar } from "../domain/useStoreCalendar";
+import Loading from "@/components/loading/Loading";
+// import { Button } from "react-day-picker";
 export default function Calendario() {
+  const hasEvent = useStoreCalendar((state) => state.hasEvent);
+  const setHasEvent = useStoreCalendar((state) => state.setHasEvent);
+  const isLoading = useStoreCalendar((state) => state.isLoading);
+
   const { localizer, messages, formats, events } = useCalendar();
 
   return (
@@ -27,17 +33,22 @@ export default function Calendario() {
         <div className="w-64 border-l border-gray-200 h-full p-2">
           <div className="flex flex-col gap-4">
             <h2 className="text-center text-2xl font-bold">Eventos</h2>
-            <div className="flex flex-col gap-2 overflow-y-auto h-full">
-              <DialogComponent
-                btnText="Crear evento"
-                title="Crear evento"
-                description="Complete los campos para crear un evento"
-                // buttonText="Crear"
-                buttonOnClick={() => {}}
-              >
-                <EventForm/>
-              </DialogComponent>
-            </div>
+            {isLoading && (
+              <div className="flex justify-center items-center">
+                <Loading size="sm" />
+              </div>
+            )}
+            {!isLoading && (
+              <div className="flex flex-col gap-4">
+                {hasEvent ? (
+                  <EventForm />
+                ) : (
+                  <Button onClick={() => setHasEvent(true)}>
+                    Crear evento
+                  </Button>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal, Plus } from "lucide-react";
+import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -35,6 +35,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Alumno } from "../config/config";
+import { DialogComponent } from "@/components/dialog/Dialog";
+import FormAlumno from "./FormAlumnos";
 const columns: ColumnDef<Alumno>[] = [
   {
     accessorKey: "nombre",
@@ -99,7 +101,6 @@ const columns: ColumnDef<Alumno>[] = [
 ];
 
 export function DataTableAlumnos({ alumnos }: { alumnos: Alumno[] }) {
-
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -165,9 +166,15 @@ export function DataTableAlumnos({ alumnos }: { alumnos: Alumno[] }) {
           </DropdownMenuContent>
         </DropdownMenu>
         <div>
-          <Button>
-            <Plus /> Agregar alumno
-          </Button>
+          <DialogComponent
+            btnText="Agregar alumno"
+            title="Agregar alumno"
+            description="Complete los campos para agregar un alumno"
+            // buttonText="Crear"
+            buttonOnClick={() => {}}
+          >
+            <FormAlumno/>
+          </DialogComponent>
         </div>
       </div>
       <div className="rounded-md border">

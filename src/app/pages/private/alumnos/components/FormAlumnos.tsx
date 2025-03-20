@@ -12,13 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "@/hooks/use-toast";
-import { Calendar } from "@/components/ui/calendar";
-import { cn } from "@/lib/utils";
-import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { useState } from "react";
-import { SelectComponent } from "./Select";
+
 
 const formSchema = z.object({
   nombre: z.string().min(2, {
@@ -27,27 +21,26 @@ const formSchema = z.object({
   apellido: z.string().min(2, {
     message: "El apellido debe tener al menos 2 caracteres.",
   }),
-  fechaNacimiento: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
-    message: "Ingrese una fecha válida en formato YYYY-MM-DD.",
+  grado: z.string().min(1, {
+    message: "El grado debe tener al menos 1 carácter.",
   }),
-  email: z.string().email({
-    message: "Ingrese un correo electrónico válido.",
-  }),
-  identificacion: z.string().min(5, {
-    message: "El número de identificación debe tener al menos 5 caracteres.",
-  }),
+  // fechaNacimiento: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
+  //   message: "Ingrese una fecha válida en formato YYYY-MM-DD.",
+  // }),
+  // email: z.string().email({
+  //   message: "Ingrese un correo electrónico válido.",
+  // }),
+  // identificacion: z.string().min(5, {
+  //   message: "El número de identificación debe tener al menos 5 caracteres.",
+  // }),
 });
 
 export default function FormAlumno() {
-    const [date, setDate] = useState<Date>()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       nombre: "",
       apellido: "",
-      fechaNacimiento: "",
-      email: "",
-      identificacion: "",
     },
   });
 
@@ -60,11 +53,7 @@ export default function FormAlumno() {
     });
   }
 
-  return (
-    <div className="max-w-md mx-auto p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">
-        Registro de Alumno
-      </h2>
+  return (  
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
@@ -93,7 +82,16 @@ export default function FormAlumno() {
               </FormItem>
             )}
           />
-          <FormField
+          <FormField control={form.control} name="grado" render={({ field }) => (
+            <FormItem>
+              <FormLabel>Grado</FormLabel>
+              <FormControl>
+                <Input type="number" placeholder="6" {...field} value={field.value}  onChange={field.onChange} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}/>
+          {/* <FormField
             control={form.control}
             name="fechaNacimiento"
             render={({ field }) => (
@@ -146,12 +144,11 @@ export default function FormAlumno() {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
           <Button type="submit" className="w-full dark:bg-primary-600">
             Registrar Alumno
           </Button>
         </form>
       </Form>
-    </div>
   );
 }

@@ -16,6 +16,7 @@ interface DialogComponentProps {
   description?: string;
   buttonText?: string;
   buttonOnClick?: () => void;
+  className?: string;
 }
 export function DialogComponent({
   children,
@@ -24,13 +25,14 @@ export function DialogComponent({
   buttonText,
   btnText,
   buttonOnClick,
+  className
 }: DialogComponentProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button>{btnText}</Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className={className}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>

@@ -1,6 +1,17 @@
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import { AppSidebar } from "./sidebar/App-sidebar";
-import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "@/components/ui/breadcrumb";
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb";
 import { Separator } from "@radix-ui/react-separator";
 import { ModeToggle } from "@/components/theme/mode-toggle";
 import { useAppStore } from "../store/AppStore";
@@ -20,56 +31,48 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         return "Calendario";
       case "/clases":
         return "Clases";
+      case "/reportes":
+        return "Reportes";
+      case "/calificaciones":
+        return "Calificaciones";
       default:
         return pathName;
     }
-
-   
   };
 
   const name = useAppStore((state) => state.user?.name);
   return (
     <SidebarProvider>
-    <AppSidebar />
-    <SidebarInset>
-      <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-        <SidebarTrigger className="-ml-1" />
-        <Separator orientation="vertical" className="mr-2 h-4" />
-        <Breadcrumb className="w-full">
-          <BreadcrumbList>
-            <BreadcrumbItem className="hidden md:block">
-              <BreadcrumbLink href="/">
-               EDU SMART
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator className="hidden md:block" />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{pathNameString(route.pathname)}</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-        <div className="flex w-full justify-end gap-2 ">
-          {
-            name &&
-            <div className="flex items-center gap-2">
-              <UserCircle className="h-5 w-5" />
-              <span>{name}</span>
-            </div>
-            
-          }
-          <ModeToggle />
-        </div>
-      </header>
-      <div className="flex flex-1 flex-col gap-4 p-4">
-        {children}
-        {/* <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-          <div className="aspect-video rounded-xl bg-muted/50" />
-          <div className="aspect-video rounded-xl bg-muted/50" />
-          <div className="aspect-video rounded-xl bg-muted/50" />
-        </div>
-        <div className="min-h-[89vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />*/}
-      </div> 
-    </SidebarInset>
-  </SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+          <SidebarTrigger className="-ml-1" />
+          <Separator orientation="vertical" className="mr-2 h-4" />
+          <Breadcrumb className="w-full">
+            <BreadcrumbList>
+              <BreadcrumbItem className="hidden md:block">
+                <BreadcrumbLink href="/">EDU SMART</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator className="hidden md:block" />
+              <BreadcrumbItem>
+                <BreadcrumbPage>
+                  {pathNameString(route.pathname)}
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+          <div className="flex w-full justify-end gap-2 ">
+            {name && (
+              <div className="flex items-center gap-2">
+                <UserCircle className="h-5 w-5" />
+                <span>{name}</span>
+              </div>
+            )}
+            <ModeToggle />
+          </div>
+        </header>
+        <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }

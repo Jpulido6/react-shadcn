@@ -9,6 +9,7 @@ interface CalendarEvent {
   end: Date;
 }
 export const useCalendar = () => {
+  const [hasEvent, setHasEvent] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [dateInit, setDateInit] = useState<Date | undefined>(new Date());
@@ -107,19 +108,21 @@ export const useCalendar = () => {
         "Noviembre",
         "Diciembre",
       ];
-      return `${start.getDate()} ${
-        meses[start.getMonth()]
-      } – ${end.getDate()} ${meses[end.getMonth()]} ${end.getFullYear()}`;
+      return `${start.getDate()} ${meses[start.getMonth()]} ${end.getDate()} ${
+        meses[end.getMonth()]
+      } ${end.getFullYear()}`;
     },
   };
   const openDialog = () => {
     setIsOpen(true);
   };
+  const handleHasEvent = () => {
+    setHasEvent(true);
+  };
 
   const addEvent = (event: CalendarEvent) => {
     setEvents((prevEvents) => [...prevEvents, event]);
   };
-
 
   return {
     localizer,
@@ -133,5 +136,8 @@ export const useCalendar = () => {
     setDateEnd,
     dateInit,
     dateEnd,
+    hasEvent,
+    setHasEvent,
+    handleHasEvent,
   };
 };

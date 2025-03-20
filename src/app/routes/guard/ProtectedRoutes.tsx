@@ -1,15 +1,20 @@
 import Layout from "@/app/layout/Layout";
 import { useAppStore } from "@/app/store/AppStore";
 import { Navigate, Outlet } from "react-router";
+import { ROUTES } from "../routesConfig";
 
-export default function ProtectedRoutes() {
+export const ProtectedLayout = () => {
   const isLogged = useAppStore((state) => state.isLogged);
+  
+  if (!isLogged) {
+    return <Navigate to={ROUTES.PUBLIC.LOGIN} replace />;
+  }
 
-  return isLogged ? (
+  return (
     <Layout>
       <Outlet />
     </Layout>
-  ) : (
-    <Navigate to="/login"  replace/>
   );
-}
+};
+
+export default ProtectedLayout;
