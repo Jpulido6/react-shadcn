@@ -17,8 +17,8 @@ export const alumnos: Alumno[] = [
     grado: "5",
     notas: {
       nota1: "8",
-      nota2: "7",
-      nota3: "9",
+      nota2: "0",
+      nota3: "0",
       nota4: "6",
       notaFinal: "8",
     },
@@ -89,8 +89,8 @@ export const alumnos: Alumno[] = [
     grado: "6",
     notas: {
       nota1: "9",
-      nota2: "6",
-      nota3: "8",
+      nota2: "0",
+      nota3: "0",
       nota4: "7",
       notaFinal: "8.5",
     },

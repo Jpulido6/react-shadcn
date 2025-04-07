@@ -20,7 +20,6 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -37,10 +36,21 @@ import {
 import { Alumno } from "../config/config";
 import { DialogComponent } from "@/components/dialog/Dialog";
 import FormAlumno from "./FormAlumnos";
+import ShowInfoAlumno from "./ShowInfoAlumno";
 const columns: ColumnDef<Alumno>[] = [
   {
     accessorKey: "nombre",
-    header: "Nombres",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Nombres
+          <ArrowUpDown />
+        </Button>
+      );
+    },  
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("nombre")}</div>
     ),
@@ -59,22 +69,25 @@ const columns: ColumnDef<Alumno>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("apellido")}</div>
+      <div className="capitalize">{row.getValue("apellido")}</div>
     ),
   },
   {
     accessorKey: "grado",
     header: "Grado",
     cell: ({ row }) => (
-      <div className="text-right">{row.getValue("grado")}</div>
+      <div >{row.getValue("grado")}</div>
     ),
   },
   {
     id: "actions",
+    header: "Acciones",
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original;
-
+      const name = row.original.nombre;
+      const apellido = row.original.apellido;
+      const grado = row.original.grado;
+      const notas = row.original.notas;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -85,14 +98,45 @@ const columns: ColumnDef<Alumno>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.nombre)}
+            <DialogComponent
+              className="w-full"
+              btnText="Info del alumno"
+              title="Info del alumno"
+              variant={"ghost"}
+              description="Descripción del alumno"
+              // buttonText="Crear"
+              buttonOnClick={() => {}}
             >
-              Copy payment ID
-            </DropdownMenuItem>
+              <ShowInfoAlumno
+                nombre={name}
+                apellido={apellido}
+                grado={grado}
+                calificacion={notas}
+              />
+            </DialogComponent>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DialogComponent
+              className="w-full"
+              btnText="Agregar Calificación"
+              title={"Agregar Calificación a: " + name + " " + apellido}
+              variant={"ghost"}
+              description="Complete los campos para agregar una calificación"
+              // buttonText="Crear"
+              buttonOnClick={() => {}}
+            >
+              <FormAlumno />
+            </DialogComponent>
+            <DropdownMenuSeparator />
+            <DialogComponent
+              btnText="Editar Alumno"
+              title={"Editar alumno: " + name + " " + apellido}
+              variant={"ghost"}
+              description="Complete los campos para agregar una calificación"
+              // buttonText="Crear"
+              buttonOnClick={() => {}}
+            >
+              <FormAlumno />
+            </DialogComponent>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -173,7 +217,7 @@ export function DataTableAlumnos({ alumnos }: { alumnos: Alumno[] }) {
             // buttonText="Crear"
             buttonOnClick={() => {}}
           >
-            <FormAlumno/>
+            <FormAlumno />
           </DialogComponent>
         </div>
       </div>

@@ -3,9 +3,14 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Poppins";
-  src: url("../src/assets/fonts/Poppins-Regular.ttf");
+  font-family: "Geist sans";
+  src: url("../src/assets/fonts/geist-sans-latin-400-normal.ttf");
 }
+@font-face {
+  font-family: "Geist mono";
+  src: url("../src/assets/fonts/GeistMono-Regular.ttf");
+}
+  
 @layer base {
   :root {
     --background: 0 0% 100%;

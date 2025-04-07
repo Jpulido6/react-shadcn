@@ -13,7 +13,8 @@ module.exports = {
   theme: {
   	extend: {
 		fontFamily: {
-			sans: ['Poppins'],
+			sans: ['Geist sans'],
+			mono: ['Geist mono']
 		},
   		borderRadius: {
   			lg: 'var(--radius)',

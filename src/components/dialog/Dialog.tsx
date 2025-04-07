@@ -12,11 +12,21 @@ import { Button } from "../ui/button";
 interface DialogComponentProps {
   children?: React.ReactNode;
   title?: string;
-  btnText: string;
+  btnText?: string;
   description?: string;
   buttonText?: string;
   buttonOnClick?: () => void;
   className?: string;
+  btnTrigger?: React.ReactNode;
+  variant?:
+    | "secondary"
+    | "outline"
+    | "link"
+    | "default"
+    | "destructive"
+    | "ghost"
+    | null
+    | undefined;
 }
 export function DialogComponent({
   children,
@@ -25,12 +35,16 @@ export function DialogComponent({
   buttonText,
   btnText,
   buttonOnClick,
-  className
+  variant,
+  className,
+  btnTrigger,
 }: DialogComponentProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>{btnText}</Button>
+        {
+          btnTrigger ? btnTrigger : <Button variant={variant}>{btnText}</Button>
+        }
       </DialogTrigger>
       <DialogContent className={className}>
         <DialogHeader>
