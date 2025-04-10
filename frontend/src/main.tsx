@@ -1,8 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { ThemeProvider } from "./components/theme/theme-provider.tsx";
-import MainRoutes from "./app/routes/MainRoutes.tsx";
+import MainRoutes from "./app/routes/MainRoutes";
+import { ThemeProvider } from "./components/theme/theme-provider";
 
 export const metaData = {
   title: "EDU SMART",
@@ -10,10 +10,8 @@ export const metaData = {
 };
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <html lang="es" suppressHydrationWarning>     
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme" >
+      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         <MainRoutes />
       </ThemeProvider>
-    </html>
   </StrictMode>
 );

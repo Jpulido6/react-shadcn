@@ -25,7 +25,6 @@ export default function HomePage() {
 
   useEffect(() => {
     setTimeout(() => {
-      console.log("timeout");
       setIsLoading(false);
     }, 5000);
   }, []);

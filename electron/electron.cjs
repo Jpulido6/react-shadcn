@@ -1,6 +1,7 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, nativeImage } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
+const icon = nativeImage.createFromPath(path.join(__dirname,'assets','icon.ico'));
 
 let backendProcess;
 
@@ -8,6 +9,7 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 1280,
     height: 800,
+    icon: icon, 
     webPreferences: {
       contextIsolation: true,
     },

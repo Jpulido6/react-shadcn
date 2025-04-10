@@ -17,6 +17,7 @@ import { ModeToggle } from "@/components/theme/mode-toggle";
 import { useAppStore } from "../store/AppStore";
 import { UserCircle } from "lucide-react";
 import { useLocation } from "react-router";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const route = useLocation();
@@ -72,6 +73,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>
+        <Toaster/>
       </SidebarInset>
     </SidebarProvider>
   );

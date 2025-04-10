@@ -10,12 +10,12 @@ const MainRoutes = () => {
   return (
     <RouteErrorBoundary>
       <BrowserRouter>
-        <Suspense fallback={<Loading />}>
-          <Routes>
-            {publicRoutes()}
-            <Route element={<ProtectedLayout />}>{privateRoutes()}</Route>
-          </Routes>
-        </Suspense>
+          <Suspense fallback={<Loading/>}>
+            <Routes>
+              {publicRoutes()}
+              <Route element={<ProtectedLayout />}>{privateRoutes()}</Route>
+            </Routes>
+          </Suspense>
       </BrowserRouter>
     </RouteErrorBoundary>
   );

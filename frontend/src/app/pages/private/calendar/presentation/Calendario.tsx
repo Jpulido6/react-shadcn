@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import EventForm from "../components/EventForm";
 import { useStoreCalendar } from "../domain/useStoreCalendar";
 import Loading from "@/components/loading/Loading";
-// import { Button } from "react-day-picker";
+import { X } from "lucide-react";
 export default function Calendario() {
   const hasEvent = useStoreCalendar((state) => state.hasEvent);
   const setHasEvent = useStoreCalendar((state) => state.setHasEvent);
@@ -39,11 +39,22 @@ export default function Calendario() {
               </div>
             )}
             {!isLoading && (
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 ">
                 {hasEvent ? (
-                  <EventForm />
+                  <>
+                    <EventForm />
+                    <div className="flex justify-center items-center h-10">
+                      <X
+                        className="cursor-pointer rounded-full hover:bg-primary-foreground "
+                        onClick={() => setHasEvent(false)}
+                      />
+                    </div>
+                  </>
                 ) : (
-                  <Button onClick={() => setHasEvent(true)}>
+                  <Button
+                    className="animate-fade-up"
+                    onClick={() => setHasEvent(true)}
+                  >
                     Crear evento
                   </Button>
                 )}
