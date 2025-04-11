@@ -1,14 +1,14 @@
 import { User } from 'src/core/domain/entities/users.entity';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, PrimaryColumn } from 'typeorm';
 export enum UserRole {
     ADMIN = 'admin',
     TEACHER = 'teacher',
     STUDENT = 'student',
 }
-@Entity('users')
+@Entity('user')
 export class UserEntity {
-    @PrimaryGeneratedColumn('uuid')
-    id: number;
+    @PrimaryColumn('uuid')
+    id: string;
 
     @Column({ unique: true })
     email: string;
@@ -21,7 +21,7 @@ export class UserEntity {
         enum: UserRole,
         default: UserRole.STUDENT,
     })
-    role: UserRole; // 'admin', 'teacher', 'student'
+    role: UserRole; 
 
     @Column({ nullable: true })
     name: string;

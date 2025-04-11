@@ -12,7 +12,7 @@ import { User } from "src/core/domain/entities/users.entity";
         TypeOrmModule.forFeature([User]),
         PassportModule,
         JwtModule.register({
-            secret: process.env.JWT_SECRET, // Cambia esto por una variable de entorno segura
+            secret: process.env.JWT_SECRET,
             signOptions: { expiresIn: '1h' },
         }),
     ],

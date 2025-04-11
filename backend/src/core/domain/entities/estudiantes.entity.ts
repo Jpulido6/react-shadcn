@@ -35,7 +35,6 @@ export class Estudiante {
     return emailRegex.test(email);
   }
 
-  // Getters
   get id(): string {
     return this.props.id!;
   }

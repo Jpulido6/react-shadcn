@@ -5,27 +5,27 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/core/domain/entities/users.entity';
 import { UserEntity, UserRole } from 'src/infraestructure/database/entities/users/users.entity';
-import { UserRepository } from '../user/user.repository';
+import { UserPostgresRepository } from '../user/infraestructure/user.repository';
 
 @Injectable()
 export class AuthService {
     constructor(
         @InjectRepository(User)
-        private userRepository: UserRepository,
+        private userRepository: UserPostgresRepository,
         private jwtService: JwtService,
     ) { }
 
     async register(email: string, password: string, role: UserRole) {
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = new User(
-            { id: 0, email, password: hashedPassword, role, name: email } // Cambia esto según tu lógica
-        );        
-        return this.userRepository.create(user);
-        
+            { id: '', email, password: hashedPassword, role, name: email } 
+        );
+        return this.userRepository.register(user);
+
     }
 
     async login(email: string, password: string) {
-        const user = await this.userRepository.findOne(email);
+        const user = await this.userRepository.findByEmail(email);
         if (!user) {
             throw new UnauthorizedException('Credenciales inválidas');
         }

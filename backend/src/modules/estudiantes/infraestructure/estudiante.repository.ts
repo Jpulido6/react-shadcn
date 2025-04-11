@@ -31,7 +31,7 @@ export class EstudiantePostgresRepository implements IEstudianteRepository {
     return studentEntity.map(studentEntity => studentEntity.toDomain());
 
   }
-  delete(id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     const studentEntity = this.studentRepo.delete(id);
     if (!studentEntity) { 
       throw new Error('Student not found');

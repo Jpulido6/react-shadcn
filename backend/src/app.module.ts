@@ -9,50 +9,32 @@ import { CrearEstudianteService } from './modules/estudiantes/application/crear-
 import { User } from './core/domain/entities/users.entity';
 import { Estudiante } from './core/domain/entities/estudiantes.entity';
 import { AuthModule } from './modules/auth/auth.module';
+import { UserController } from './modules/user/presentation/user.controller';
+import { UserModule } from './modules/user/user.module';
+import { UserEntity } from './infraestructure/database/entities/users/users.entity';
+import { EstudianteEntity } from './infraestructure/database/entities/estudiantes/estudiantes.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-
-  imports: [
+  imports: [   
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
-      load: [() => (
-        {
-          port: parseInt(process.env.PORT!, 10) || 3000,
-          database: {
-            host: process.env.DB_HOST,
-            port: parseInt(process.env.DB_PORT!, 10) || 5432,
-            username: process.env.DB_USERNAME,
-            password: process.env.DB_PASSWORD,
-            database: process.env.DB_NAME,
-            entities: [User,Estudiante],
-          }
-        }
-      )],
     }),
-    AuthModule
-   
-    // TypeOrmModule.forRootAsync({
-    //   useFactory: async () => {
-    //     return {
-    //       type: 'postgres',      
-    //       host: process.env.DB_HOST,
-    //       port: parseInt(process.env.DB_PORT!, 10) || 5432,
-    //       username: process.env.DB_USERNAME,
-    //       password: process.env.DB_PASSWORD,
-    //       database: process.env.DB_NAME,
-    //       entities: [User, Estudiante],
-    //       synchronize: true,
-    //       logging: true,
-    //     };
-    //   },
-    
-    
-
-    
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT!, 10),
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      entities: [UserEntity], // Asegúrate de incluir UserEntity aquí
+      synchronize: true, // Solo para desarrollo
+    }),
+    // AuthModule,
+    UserModule
   ],
-  
-  controllers: [AppController, AuthController, StudentController],
-  providers: [AppService, AuthService, CrearEstudianteService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule { }
