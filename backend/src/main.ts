@@ -6,21 +6,23 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: '*', 
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
-  app.useGlobalPipes(new ValidationPipe({
-    transform: true,
-    whitelist: true,
-    forbidNonWhitelisted: true,
-    skipMissingProperties: false,
-    transformOptions: {
-      enableImplicitConversion: true,
-    },
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      skipMissingProperties: false,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  );
 
-console.log(`Server running on port ${process.env.PORT ?? 3000}`);
+  console.log(`Server running on port ${process.env.PORT ?? 3000}`);
 
   await app.listen(process.env.PORT ?? 3000);
 }

@@ -14,21 +14,22 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: 'TU_SECRETO_JWT', // Cambia esto por una variable de entorno segura
+      secretOrKey: process.env.JWT_SECRET || 'secret',
     });
   }
 
   async validate(payload: any) {
-    const user = await this.userRepository.findOne({ 
-      where: { id: payload.sub } 
+    const user = await this.userRepository.findOne({
+      where: { id: payload.sub },
     });
     if (!user) {
       throw new UnauthorizedException();
     }
-    return { 
-      id: user.id, 
-      email: user.email, 
-      role: user.role 
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
     };
   }
 }
