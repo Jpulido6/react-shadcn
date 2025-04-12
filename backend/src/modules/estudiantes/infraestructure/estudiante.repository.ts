@@ -1,42 +1,42 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Estudiante } from "src/core/domain/entities/estudiantes.entity";
-import { IEstudianteRepository } from "src/core/domain/interfaces/estudiantes.interface";
-import { EstudianteEntity } from "src/infraestructure/database/entities/estudiantes/estudiantes.entity";
-import { Repository } from "typeorm";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Estudiante } from 'src/core/domain/entities/estudiantes.entity';
+import { IEstudianteRepository } from 'src/core/domain/interfaces/estudiantes.interface';
+import { EstudianteEntity } from 'src/infraestructure/database/entities/estudiantes/estudiantes.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class EstudiantePostgresRepository implements IEstudianteRepository {
   constructor(
     @InjectRepository(EstudianteEntity)
-    private readonly studentRepo: Repository<EstudianteEntity>
-  ) { }
+    private readonly studentRepo: Repository<EstudianteEntity>,
+  ) {}
   async findById(id: string): Promise<Estudiante | null> {
     const studentEntity = await this.studentRepo.findOne({
       where: { id },
-      relations: ['grades']
+      relations: ['grades'],
     });
 
     return studentEntity ? studentEntity.toDomain() : null;
-
   }
   async findByEmail(email: string): Promise<Estudiante | null> {
-    const studentEntity = await this.studentRepo.findOne({ where: { email } })
+    const studentEntity = await this.studentRepo.findOne({ where: { email } });
     return studentEntity ? studentEntity.toDomain() : null;
-
   }
   async findAll(): Promise<Estudiante[]> {
-    const studentEntity = await this.studentRepo.find({ relations: ['grades'] })
+    const studentEntity = await this.studentRepo.find({
+      relations: ['grades'],
+    });
 
-    return studentEntity.map(studentEntity => studentEntity.toDomain());
-
+    return studentEntity.map((studentEntity) => studentEntity.toDomain());
   }
-  async delete(id: string): Promise<void> {
-    const studentEntity = this.studentRepo.delete(id);
-    if (!studentEntity) { 
-      throw new Error('Student not found');
+  async delete(id: string): Promise<boolean> {
+    const studentEntity = await this.studentRepo.delete(id);
+    if (!studentEntity.affected) {
+      throw new Error('Estudiante no encontrado');
     }
-    return studentEntity.then(() => { });
+    if (studentEntity) return true;
+    return studentEntity;
   }
 
   async save(student: Estudiante): Promise<void> {
@@ -56,9 +56,7 @@ export class EstudiantePostgresRepository implements IEstudianteRepository {
       isActive: student.isActive!,
       // grades: [], // Asumiendo que no se manejan las calificaciones aquí
       // tasks: [] // Asumiendo que no se manejan las tareas aquí
-      toDomain: () => student // Método para convertir a modelo de dominio
-
+      toDomain: () => student,
     };
-
   }
 }

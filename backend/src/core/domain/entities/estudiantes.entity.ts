@@ -15,7 +15,7 @@ export class Estudiante {
   constructor(props: EstudiantesProps) {
     this.props = {
       ...props,
-      id: props.id || this.generateId()
+      id: props.id || this.generateId(),
     };
   }
 
@@ -60,6 +60,4 @@ export class Estudiante {
   get isActive(): boolean | undefined {
     return this.props.isActive;
   }
-
-
 }
